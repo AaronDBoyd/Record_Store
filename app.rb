@@ -5,6 +5,10 @@ require('pry')
 require('./lib/song')
 # require('rb-readline')
 also_reload('lib/**/*.rb')
+require('pg')
+require('./db_access.rb')
+
+# DB = PG.connect({:dbname => "record_store"})
 
 get('/results') do
   # @album = Album.search(params[:album_name])
