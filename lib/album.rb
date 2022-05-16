@@ -43,9 +43,22 @@ class Album
     Album.new({:name => name, :id => id})
   end
 
-  def update(x)
-    @name = x
-    DB.exec("UPDATE albums SET name = '#{@name}' WHERE id = #{@id};")
+  # def update(x)
+  #   @name = x
+  #   DB.exec("UPDATE albums SET name = '#{@name}' WHERE id = #{@id};")
+  # end
+
+  def update(attributes)
+    if (attributes.has_key?(:name)) && (attributes.fetch(:name) != nil)
+      @name = attributes.fetch(:name)
+      DB.exec("UPDATE albums SET name = '#{@name}' WHERE id = #{@id};")
+    elsif (attributes.has_key?(:artist_name)) && (attributes.fetch(:artist_name) != nil)
+      artist_name = attributes.fetch(:artist_name)
+      artist = DB.exec("SELECT * FROM artists WHERE lower(name)='#{artist_name.downcase}';").first
+      if artist != nil
+        DB.exec("INSERT INTO albums_artists (artist_id, album_id) VALUES (#{artist['id'].to_i}, #{@id});")
+      end
+    end
   end
 
   def delete
@@ -53,6 +66,18 @@ class Album
     DB.exec("DELETE FROM songs WHERE album_id = #{@id};")
   end
 
+  def artists
+    artists = []
+    results = DB.exec("SELECT artist_id FROM albums_artists WHERE album_id = #{@id};")
+  results.each() do |result|
+    artist_id = result.fetch("artist_id").to_i()
+    artist = DB.exec("SELECT * FROM artists WHERE id = #{artist_id};")
+    name = artist.first().fetch("name")
+    artists.push(Artist.new({:name => name, :id => artist_id}))
+  end
+    artists
+  end
+  
 
   def songs
     Song.find_by_album(self.id)
@@ -65,7 +90,6 @@ class Album
       
     search_results.push(al[1])
     
-
   end
 end
 
