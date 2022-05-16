@@ -60,21 +60,23 @@ describe('#Album') do
     it('updates an album by id') do
       album = Album.new(:name =>'Giant Steps',:id => nil)
       album.save()
-      album.update('A Love Supreme')
-      expect(album.name).to(eq('A Love Supreme'))
+      artist = Artist.new({:name => "John Coltrane", :id => nil})
+      artist.save()
+      album.update(:artist_name => "John Coltrane")
+      expect(album.artists).to(eq([artist]))
     end
   end
 
-  describe('#delete') do
-    it("deletes an album by id") do
-      album = Album.new(:name =>"Giant Steps",:id => nil)
-      album.save()
-      album2 = Album.new(:name =>"Blue",:id => nil)
-      album2.save()
-      album.delete()
-      expect(Album.all).to(eq([album2]))
-    end
-  end
+  # describe('#delete') do
+  #   it("deletes an album by id") do
+  #     album = Album.new(:name =>"Giant Steps",:id => nil)
+  #     album.save()
+  #     album2 = Album.new(:name =>"Blue",:id => nil)
+  #     album2.save()
+  #     album.delete()
+  #     expect(Album.all).to(eq([album2]))
+  #   end
+  # end
 
   describe('#delete') do
   it("deletes all songs belonging to a deleted album") do

@@ -2,6 +2,59 @@ require('spec_helper')
 
 describe('#Artist') do
   describe('#update') do
-
+    it("adds an album to an artist") do
+      artist = Artist.new({:name => "John Coltrane", :id => nil})
+      artist.save()
+      album = Album.new({:name => "A Love Supreme", :id => nil})
+      album.save()
+      artist.update({:album_name => "A Love Supreme"})
+      expect(artist.albums).to(eq([album]))
+    end
   end
+
+  describe('.all') do
+    it('returns an empty array when there are no artists') do
+      expect(Artist.all).to(eq([]))
+    end
+  end
+
+  describe('#save') do
+    it('saves an artist') do
+      elton = Artist.new(:name => 'Elton John', :id =>nil)
+      elton.save()
+      pantera = Artist.new(:name =>'Pantera', :id => nil)
+      pantera.save()
+      expect(Artist.all).to(eq([elton, pantera]))
+    end
+  end
+
+  describe('#==') do
+    it('is the same artist if it has the same attributes as another artist') do
+      beatles = Artist.new(:name => 'The Beatles', :id => nil)
+      beatles2 = Artist.new(:name => 'The Beatles', :id => nil)
+      expect(beatles).to(eq(beatles2))
+    end
+  end
+
+  describe('.clear') do
+    it('clears all artists') do
+      slipknot = Artist.new(:name => 'Slipknot', :id => nil)
+      slipknot.save
+      prince = Artist.new(:name => 'Prince', :id => nil)
+      prince.save
+      Artist.clear
+      expect(Artist.all).to(eq([]))
+    end
+  end
+
+  describe('.find') do
+    it('finds an artist by id') do
+      reo = Artist.new(:name => 'REO Speedwagon', :id => nil)
+      reo.save
+      ozzy = Artist.new(:name => 'Ozzy', :id => nil)
+      ozzy.save
+      expect(Artist.find(reo.id)).to(eq(reo))
+    end
+  end
+
 end
