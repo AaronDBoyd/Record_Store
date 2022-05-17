@@ -40,7 +40,6 @@ post('/albums') do
   album = Album.new(:name =>name, :id =>nil)
   album.save()
   @albums = Album.all
-  binding.pry
   erb(:albums)
 end
 
@@ -132,7 +131,7 @@ post('/artists') do
   name = params[:artist_name]
   artist = Artist.new(:name => name, :id => nil)
   artist.save
-binding.pry
+
   @artists = Artist.all
   erb(:artists)
 end
@@ -149,11 +148,11 @@ post('/artists/:id') do
   # album = Album.new(:name =>album_name, :id =>nil)
   # album.save()
 
-  @album = Album.find(params[:id].to_i())
+  
   @artist = Artist.find(params[:id].to_i())
   @artist.update({:name => params[:name], :album_name => params[:album_name]})
-  @artists = Artist.all
-  # @album = Album.find(params[:id].to_i())
+  
+  
   erb(:artist)
 end
 

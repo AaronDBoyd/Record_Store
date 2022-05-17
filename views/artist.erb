@@ -1,3 +1,5 @@
+<% Pry.config.input = STDIN %>
+  <% Pry.config.output = STDOUT %>
 <h2>Artist Name: <%= @artist.name %></h2>
 
 <h3>Artist Albums</h3>
@@ -5,7 +7,7 @@
   <% if @artist.albums %>
     <ul>
       <% @artist.albums.each do |album| %>
-        <li><a href="/albums/<%= @album.id %>"><%= album.name %></a></li>
+        <li><a href="/albums/<%= album.id %>"><%= album.name %></a></li>
       <% end %>
     </ul>
   <% else %>
