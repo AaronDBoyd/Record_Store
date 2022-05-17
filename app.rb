@@ -24,9 +24,11 @@ post('/results') do
   erb(:search_results)
 end
 
+# -change homepage to artists view
 get('/') do
   @albums = Album.all
-  erb(:albums)
+  @artists = Artist.all
+  erb(:artists)
 end
 
 get ('/albums') do
@@ -144,9 +146,9 @@ patch('/artists/:id') do
 end
 
 post('/artists/:id') do
-  # album_name = params[:album_name]
-  # album = Album.new(:name =>album_name, :id =>nil)
-  # album.save()
+  album_name = params[:album_name]
+  album = Album.new(:name =>album_name, :id =>nil)
+  album.save()
 
   
   @artist = Artist.find(params[:id].to_i())
