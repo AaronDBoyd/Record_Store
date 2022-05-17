@@ -12,7 +12,9 @@ require('./db_access.rb')
 # DB = PG.connect({:dbname => "record_store"})
 
 get('/results') do
-  # @album = Album.search(params[:album_name])
+  # @albums = Album.search(params[:name])
+  # @albums = Album.search(params[:search])
+  
   erb(:search_results)
 end
 
@@ -21,6 +23,8 @@ post('/results') do
   # album = Album.new(name, nil)
   # album.save()
   @albums =  Album.search(name)
+  @artists = Artist.search(name)
+  
   erb(:search_results)
 end
 
