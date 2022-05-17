@@ -88,7 +88,12 @@ class Artist
   albums
   end
 
-
+  def self.search(str)  
+    result = DB.exec("SELECT * FROM artists WHERE name ILIKE '%#{str}%';")
+    if result.any?
+      result
+    end
+  end
 
 
 end

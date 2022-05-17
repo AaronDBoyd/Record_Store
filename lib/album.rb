@@ -97,11 +97,18 @@ class Album
 
   def self.search(str)
     # @@albums.find_all { |album| album[1].name.downcase == str.downcase }
-     search_results = []
-    al = @@albums.find_all { |album| album[1].name.downcase == str.downcase }
+    #  search_results = []
+    # al = @@albums.find_all { |album| album[1].name.downcase == str.downcase }
       
-    search_results.push(al[1])
-    
+    # search_results.push(al[1])
+    # array =[]
+    result = DB.exec("SELECT * FROM albums WHERE name ILIKE '%#{str}%';")
+    # array.push(result)
+    # array
+    # result
+    if result.any?
+      result
+    end
   end
 end
 
