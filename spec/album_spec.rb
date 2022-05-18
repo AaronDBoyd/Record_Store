@@ -1,14 +1,6 @@
-# require('rspec')
-# require('album')
-# require('song')
 require('spec_helper')
 
-
 describe('#Album') do
-
-  # before(:each) do
-    
-  # end
 
   describe('.all') do
     it('returns an empty array when there are no albums') do
@@ -99,6 +91,17 @@ end
       song2 = Song.new(:name => "Cousin Mary", :album_id => album.id, :id => nil)
       song2.save()
       expect(album.songs).to(eq([song, song2]))
+    end
+  end
+
+  describe('#artists') do
+    it('returns all artists related to an album') do
+      album = Album.new(:name => "This is a sweet album", :id => nil)
+      album.save
+      artist = Artist.new(:name => "Cool Artist Person", :id => nil)
+      artist.save
+      album.update(:artist_name => "Cool Artist Person")
+      expect(album.artists).to(eq([artist]))
     end
   end
 end
