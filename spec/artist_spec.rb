@@ -65,9 +65,21 @@ describe('#Artist') do
       artist2.save
       artist3 = Artist.new({:name =>'Giant Steps', :id => nil})
       artist3.save
-      expect(Artist.search("por")).to(eq([artist]))
-      
+      expect(Artist.search("por")).to(eq([artist]))  
     end
   end
+
+  describe('#delete') do
+    it('deletes an artist by id') do
+      artist = Artist.new(:name =>"Giant Steps",:id =>nil)
+      artist.save()
+      artist2 = Artist.new(:name =>"Naima", :id =>nil)
+      artist2.save()
+      artist.delete()
+      expect(Artist.all).to(eq([artist2]))
+    end
+  end
+
+
 
 end
