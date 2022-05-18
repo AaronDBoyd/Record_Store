@@ -31,10 +31,6 @@ class Artist
     end
   end
 
-  # def ==(artist_to_compare)
-  #   self.name() == artist_to_compare.name()
-  # end
-
   def self.clear
     DB.exec("DELETE FROM artists *;")
   end
@@ -43,20 +39,12 @@ class Artist
     artist = DB.exec("SELECT * FROM artists WHERE id = #{id};").first
     if artist
       name = artist.fetch("name")
-      # album_id = song.fetch("album_id").to_i
       id = artist.fetch("id").to_i
       Artist.new({:name => name, :id => id})
     else
       nil
     end
   end
-
-  # def self.find(id)
-  #   artist = DB.exec("SELECT * FROM artists WHERE id = #{id};").first
-  #   name = artist.fetch("name")
-  #   id = artist.fetch("id").to_i
-  #   Artist.new({:name => name, :id => id})
-  # end
 
   def update(attributes)
     if (attributes.has_key?(:name)) && (attributes.fetch(:name) != nil)
@@ -84,12 +72,12 @@ class Artist
     album = DB.exec("SELECT * FROM albums WHERE id = #{album_id};")
     name = album.first().fetch("name")
     albums.push(Album.new({:name => name, :id => album_id}))
+    end
+    if albums.any?
+    albums
+    end
   end
-  if albums.any?
-  albums
-  end
-  end
-# - LOOK AT . all method!!
+
   def self.search(str)  
     result = DB.exec("SELECT * FROM artists WHERE name ILIKE '%#{str}%';")
     artists = []
@@ -102,6 +90,4 @@ class Artist
       artists
     end
   end
-
-
 end
