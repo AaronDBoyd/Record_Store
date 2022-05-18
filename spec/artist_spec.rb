@@ -80,6 +80,14 @@ describe('#Artist') do
     end
   end
 
-
-
+  describe('#albums') do
+    it('returns all albums related to an artist') do
+      album = Album.new(:name => "This is a sweet album", :id => nil)
+      album.save
+      artist = Artist.new(:name => "Cool Artist Person", :id => nil)
+      artist.save
+      artist.update(:album_name => "This is a sweet album")
+      expect(artist.albums).to(eq([album]))
+    end
+  end
 end
