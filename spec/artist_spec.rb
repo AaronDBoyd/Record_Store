@@ -57,4 +57,17 @@ describe('#Artist') do
     end
   end
 
+  describe('.search') do
+    it("searches for an artist by artist name") do
+      artist = Artist.new({:name =>"Lil Porky",:id => nil})
+      artist.save
+      artist2 = Artist.new({:name =>"Love Supreme", :id => nil})
+      artist2.save
+      artist3 = Artist.new({:name =>'Giant Steps', :id => nil})
+      artist3.save
+      expect(Artist.search("por")).to(eq([artist]))
+      
+    end
+  end
+
 end

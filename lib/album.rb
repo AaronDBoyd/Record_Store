@@ -87,27 +87,29 @@ class Album
     name = artist.first().fetch("name")
     artists.push(Artist.new({:name => name, :id => artist_id}))
   end
-    artists
+    if artists.any?
+      artists
+    end
   end
   
 
   def songs
-    Song.find_by_album(self.id)
+    find = Song.find_by_album(self.id)
+    if find.any?
+      find
+    end
   end
-
+#- Does not pass test but works in webpage
   def self.search(str)
-    # @@albums.find_all { |album| album[1].name.downcase == str.downcase }
-    #  search_results = []
-    # al = @@albums.find_all { |album| album[1].name.downcase == str.downcase }
-      
-    # search_results.push(al[1])
-    # array =[]
     result = DB.exec("SELECT * FROM albums WHERE name ILIKE '%#{str}%';")
-    # array.push(result)
-    # array
-    # result
-    if result.any?
-      result
+    albums = []
+    result.each() do |album|
+      name = album.fetch("name")
+      id = album.fetch("id").to_i
+      albums.push(Album.new({:name => name, :id => id}))
+    end
+    if albums.any?
+      albums
     end
   end
 end

@@ -67,17 +67,6 @@ describe('#Album') do
     end
   end
 
-  # describe('#delete') do
-  #   it("deletes an album by id") do
-  #     album = Album.new(:name =>"Giant Steps",:id => nil)
-  #     album.save()
-  #     album2 = Album.new(:name =>"Blue",:id => nil)
-  #     album2.save()
-  #     album.delete()
-  #     expect(Album.all).to(eq([album2]))
-  #   end
-  # end
-
   describe('#delete') do
   it("deletes all songs belonging to a deleted album") do
     album = Album.new({:name => "A Love Supreme", :id => nil})
@@ -89,28 +78,27 @@ describe('#Album') do
   end
 end
 
-  # describe('.search') do
-  #   it("searches for an album by album name") do
-  #     album = Album.new("Giant Steps", nil)
-  #     album.save
-  #     album2 = Album.new("Love Supreme", nil)
-  #     album2.save
-  #     album3 = Album.new('Giant Steps', nil)
-  #     album3.save
-  #     expect(Album.search("Giant Steps")).to(eq(album))
-  #     #CHANGED FROM LOWERCASE
-  #   end
-  # end
+  describe('.search') do
+    it("searches for an album by album name") do
+      album = Album.new({:name =>"Lil Porky",:id => nil})
+      album.save
+      album2 = Album.new({:name =>"Love Supreme", :id => nil})
+      album2.save
+      album3 = Album.new({:name =>'Giant Steps', :id => nil})
+      album3.save
+      expect(Album.search("por")).to(eq([album]))  
+    end
+  end
 
-  # describe('#songs') do
-  #   it("returns an album's songs") do
-  #     album = Album.new("Giant Steps", nil)
-  #     album.save()
-  #     song = Song.new("Naima", album.id, nil)
-  #     song.save()
-  #     song2 = Song.new("Cousin Mary", album.id, nil)
-  #     song2.save()
-  #     expect(album.songs).to(eq([song, song2]))
-  #   end
-  # end
+  describe('#songs') do
+    it("returns an album's songs") do
+      album = Album.new(:name => "Giant Steps", :id => nil)
+      album.save()
+      song = Song.new(:name => "Naima", :album_id => album.id, :id => nil)
+      song.save()
+      song2 = Song.new(:name => "Cousin Mary", :album_id => album.id, :id => nil)
+      song2.save()
+      expect(album.songs).to(eq([song, song2]))
+    end
+  end
 end

@@ -6,7 +6,7 @@
 
   <ul>
   <% @albums.each do |album| %>
-    <li><a href="/albums/<%= album["id"] %>"><%= album["name"] %></a></li>
+    <li><a href="/albums/<%= album.id %>"><%= album.name %></a></li>
   <% end %>
   </ul>
 
@@ -14,7 +14,7 @@
 
   <ul>
   <% @artists.each do |artist| %>
-    <li><a href="/artists/<%= artist["id"] %>"><%= artist["name"] %></a></li>
+    <li><a href="/artists/<%= artist.id %>"><%= artist.name %></a></li>
   <% end %>
   </ul>
 <% else %>

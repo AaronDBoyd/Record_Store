@@ -85,13 +85,21 @@ class Artist
     name = album.first().fetch("name")
     albums.push(Album.new({:name => name, :id => album_id}))
   end
+  if albums.any?
   albums
   end
-
+  end
+# - LOOK AT . all method!!
   def self.search(str)  
     result = DB.exec("SELECT * FROM artists WHERE name ILIKE '%#{str}%';")
-    if result.any?
-      result
+    artists = []
+    result.each() do |artist|
+      name = artist.fetch("name")
+      id = artist.fetch("id").to_i
+      artists.push(Artist.new({:name => name, :id => id}))
+    end
+    if artists.any?
+      artists
     end
   end
 
