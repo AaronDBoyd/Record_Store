@@ -2,8 +2,6 @@ class Album
   attr_reader :id
   attr_accessor :name
 
-  
-
   def initialize(attributes)
     @name = attributes.fetch(:name)
     @id = attributes.fetch(:id)
@@ -36,29 +34,16 @@ class Album
     DB.exec("DELETE FROM albums *;")
   end
 
-  # def self.find(id)
-  #   album = DB.exec("SELECT * FROM albums WHERE id = #{id};").first
-  #   name = album.fetch("name")
-  #   id = album.fetch("id").to_i
-  #   Album.new({:name => name, :id => id})
-  # end
-
   def self.find(id)
     album = DB.exec("SELECT * FROM albums WHERE id = #{id};").first
     if album
       name = album.fetch("name")
-      # album_id = song.fetch("album_id").to_i
       id = album.fetch("id").to_i
       Album.new({:name => name, :id => id})
     else
       nil
     end
   end
-
-  # def update(x)
-  #   @name = x
-  #   DB.exec("UPDATE albums SET name = '#{@name}' WHERE id = #{@id};")
-  # end
 
   def update(attributes)
     if (attributes.has_key?(:name)) && (attributes.fetch(:name) != nil)
@@ -99,7 +84,7 @@ class Album
       find
     end
   end
-#- Does not pass test but works in webpage
+
   def self.search(str)
     result = DB.exec("SELECT * FROM albums WHERE name ILIKE '%#{str}%';")
     albums = []
@@ -113,5 +98,3 @@ class Album
     end
   end
 end
-
-# p @@albums.class
